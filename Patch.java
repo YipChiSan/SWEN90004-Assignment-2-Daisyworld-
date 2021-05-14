@@ -5,13 +5,15 @@ public class Patch {
     private final int yAxis;
     private ArrayList<Patch> neighbours;
     Daisy daisy;
+    private final float diffusionRate;
     private final float surfaceAlbedo;
 
-    public Patch(int xAxis, int yAxis, List<Patch> neighbours, float surfaceAlbedo) {
+    public Patch(int xAxis, int yAxis, List<Patch> neighbours, float surfaceAlbedo, float diffusionRate = 0.5) {
         this.xAxis = xAxis;
         this.yAxis = yAxis;
         this.neighbours = neighbours;
         this.surfaceAlbedo = surfaceAlbedo;
+        this.diffusionRate = diffusionRate;
     }
 
     public int getXAxis() {
