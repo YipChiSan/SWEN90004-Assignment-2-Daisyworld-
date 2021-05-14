@@ -40,5 +40,13 @@ public class Patch {
         }
     }
 
+    private Float getAbsorbedLumin(Float solarLumin) {
+        if (!isThereDaisy()) {
+            return (1 - this.surfaceAlbedo) * solarLumin + this.diffusionRate;
+        } else {
+            return (1 - this.daisy.getAlbedo()) * solarLumin + this.diffusionRate
+        }
+    }
+
 
 }
