@@ -32,5 +32,13 @@ public class Patch {
         this.daisy = daisy;
     }
 
+    public Boolean isThereDaisy() {
+        if (this.daisy != null) {
+            return this.daisy.isAlive(); //Assume there is a function to check the survivability of the daisy
+        } else {
+            return false;
+        }
+    }
+
 
 }
