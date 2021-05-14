@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.lang.*;
 
 public class Patch {
     private final  int xAxis;
@@ -7,6 +8,7 @@ public class Patch {
     Daisy daisy;
     private final float diffusionRate;
     private final float surfaceAlbedo;
+    private Float localTemp;
 
     public Patch(int xAxis, int yAxis, List<Patch> neighbours, float surfaceAlbedo, float diffusionRate = 0.5) {
         this.xAxis = xAxis;
@@ -46,6 +48,12 @@ public class Patch {
         } else {
             return (1 - this.daisy.getAlbedo()) * solarLumin + this.diffusionRate;
         }
+    }
+
+    public Float getLocalTemp(Float solarLumin) {
+        Float localHeating = 72 * Math.log(getAbsorbedLumin(solarLumin)) + 80;
+        this.localTemp = (localTemp + localHeating) / 2
+        return this.localTemp;
     }
 
 
