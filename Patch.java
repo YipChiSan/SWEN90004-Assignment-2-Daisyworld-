@@ -86,7 +86,7 @@ public class Patch extends DaisyWorldThread{
                     }
                 }
                 if (isChanged) {
-                    this.localTemp -= tempChange * this.neighbours.size();
+                    addTemp(-tempChange * this.neighbours.size()); 
                 }
             } catch (InterruptedException e) {
                 this.interrupt();
