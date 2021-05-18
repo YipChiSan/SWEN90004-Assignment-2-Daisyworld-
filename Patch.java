@@ -57,7 +57,7 @@ public class Patch extends DaisyWorldThread{
         return this.localTemp;
     }
 
-    public void addTemp(Float addedTemp){
+    public synchronized void addTemp(Float addedTemp){
         this.localTemp += addedTemp;
     }
 
