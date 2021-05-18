@@ -78,12 +78,12 @@ public class Patch extends DaisyWorldThread{
      * This patch will diffuse until none of its neighbors' temperature is lower than it.
      */
     public void run() {
-        float tempChange = this.localTemp * this.diffusionRate / this.neighbours.size();
+        float tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
         boolean isChanged = false;
         while(!isInterrupted()){
             try{
                 for (Patch patch : this.neighbours) {
-                    if (patch.getLocalTemp() <= this.localTemp) {
+                    if (patch.getLocalTemp() <= getLocalTemp()) {
                         patch.addTemp(tempChange);
                         isChanged = true;
                     }
