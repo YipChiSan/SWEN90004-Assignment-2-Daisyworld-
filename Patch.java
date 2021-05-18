@@ -10,13 +10,15 @@ public class Patch extends DaisyWorldThread{
     private final float surfaceAlbedo;
     private Float localTemp;
 
-    public Patch(int xAxis, int yAxis, List<Patch> neighbours, float surfaceAlbedo, float diffusionRate) {
+    public Patch(int xAxis, int yAxis, List<Patch> neighbours, float surfaceAlbedo, float diffusionRate, float solarLumin) {
         super();
         this.xAxis = xAxis;
         this.yAxis = yAxis;
         this.neighbours = neighbours;
         this.surfaceAlbedo = surfaceAlbedo;
         this.diffusionRate = diffusionRate;
+        this.solarLumin = solarLumin;
+        updataTemp();
     }
 
     public int getXAxis() {
@@ -56,17 +58,18 @@ public class Patch extends DaisyWorldThread{
      * @param solarLumin Solar luminosity
      * @return Local temperature of this patch
      */
-    public synchronized void updataTemp(Float solarLumin) {
-        Float localHeating = 72 * Math.log(getAbsorbedLumin(solarLumin)) + 80;
-        this.localTemp = (localTemp + localHeating) / 2;
+    public synchronized void updataTemp() {
+        Float localHeating = 72 * Math.log(getAbsorbedLumin(this.solarLumin)) + 80;
+        this.localTemp = (this.localTemp + localHeating) / 2;
     }
 
-    public Float getLocalTemp(){
+    public synchronized Float getLocalTemp(){
         return this.localTemp;
     }
 
     public synchronized void addTemp(Float addedTemp){
         this.localTemp += addedTemp;
+        updataTemp();
     }
 
     @Override
