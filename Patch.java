@@ -69,16 +69,23 @@ public class Patch extends DaisyWorldThread{
         this.localTemp += addedTemp;
     }
 
+    @Override
     /**
      * This is actually a diffuse function.
      * This patch will diffuse until none of its neighbors' temperature is lower than it.
      */
     public void run() {
         float tempChange = this.localTemp * this.diffusionRate;
-        for (Patch patch : this.neighbours) {
-            if patch.getLocalTemp(solarLumin)
+        while(!isInterrupted()){
+            try{
+                for (Patch patch : this.neighbours) {
+                    if (patch.getLocalTemp() <= this.localTemp) {
+                        patch.addTemp(tempChange);
+                    }
+                }
+            } catch (InterruptedException e) {
+                this.interrupt();
+            }
         }
     }
-
-
 }
