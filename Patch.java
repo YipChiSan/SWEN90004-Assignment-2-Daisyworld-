@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.lang.*;
 
-public class Patch {
+public class Patch extends DaisyWorldThread{
     private final  int xAxis;
     private final int yAxis;
     private ArrayList<Patch> neighbours;
