@@ -35,6 +35,7 @@ public class Patch extends DaisyWorldThread{
 
     public void setDaisy(Daisy daisy) {
         this.daisy = daisy;
+        updataTemp();
     }
 
     public Boolean isThereDaisy() {
