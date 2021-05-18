@@ -28,7 +28,7 @@ public class Patch extends DaisyWorldThread{
     }
 
     public List<Patch> getNeighbours() {
-        return this.neighbours.clone();
+        return this.neighbours;
     }
 
     public void setDaisy(Daisy daisy) {
@@ -51,14 +51,33 @@ public class Patch extends DaisyWorldThread{
         }
     }
 
-    public Float getLocalTemp(Float solarLumin) {
+    /**
+     * This function should be run right after a patch is created.
+     * @param solarLumin Solar luminosity
+     * @return Local temperature of this patch
+     */
+    public synchronized void updataTemp(Float solarLumin) {
         Float localHeating = 72 * Math.log(getAbsorbedLumin(solarLumin)) + 80;
         this.localTemp = (localTemp + localHeating) / 2;
+    }
+
+    public Float getLocalTemp(){
         return this.localTemp;
     }
 
     public synchronized void addTemp(Float addedTemp){
         this.localTemp += addedTemp;
+    }
+
+    /**
+     * This is actually a diffuse function.
+     * This patch will diffuse until none of its neighbors' temperature is lower than it.
+     */
+    public void run() {
+        float tempChange = this.localTemp * this.diffusionRate;
+        for (Patch patch : this.neighbours) {
+            if patch.getLocalTemp(solarLumin)
+        }
     }
 
 
