@@ -75,7 +75,6 @@ public class Patch extends DaisyWorldThread{
     /**
      * This function should be run right after a patch is created.
      * @param solarLumin Solar luminosity
-     * @return Local temperature of this patch
      */
     public synchronized void updateTemp() {
         double localHeating = 72 * Math.log(getAbsorbedLumin(this.solarLumin)) + 80;
