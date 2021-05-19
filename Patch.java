@@ -34,6 +34,7 @@ public class Patch extends DaisyWorldThread{
         this.neighbours = new ArrayList<>();
         this.surfaceAlbedo = 0.4;
         this.diffusionRate = 0.5;
+        updateTemp();
 
 
     }
