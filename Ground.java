@@ -15,6 +15,7 @@ public class Ground extends DaisyWorldThread {
             }
         }
         addNeighbors(this.ground);
+        updateGlobalTemp();
     }
 
     private void addNeighbors(ArrayList<ArrayList<Patch>> ground) {
@@ -95,6 +96,7 @@ public class Ground extends DaisyWorldThread {
                     for (int j = 0; j < size; j++) {
                         this.ground.get(i).get(j).updateTemp();
                         this.ground.get(i).get(j).diffuse();
+                        updateGlobalTemp();
                     }
                 }
 
