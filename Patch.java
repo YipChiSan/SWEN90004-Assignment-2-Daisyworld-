@@ -11,6 +11,7 @@ public class Patch extends DaisyWorldThread{
     private final float surfaceAlbedo;
     private Float localTemp;
     private CountDownLatch latch;
+    private float solarLumin;
 
     public Patch(int xAxis, int yAxis, CountDownLatch latch, List<Patch> neighbours, float surfaceAlbedo, float diffusionRate, float solarLumin) {
         super();
@@ -22,6 +23,19 @@ public class Patch extends DaisyWorldThread{
         this.solarLumin = solarLumin;
         this.latch = latch;
         updataTemp();
+    }
+
+    public Patch(int xAxis, int yAxis, CountDownLatch latch, float solarLumin) {
+        super();
+        this.xAxis = xAxis;
+        this.yAxis = yAxis;
+        this.latch = latch;
+        this.solarLumin = solarLumin;
+        this.neighbours = new ArrayList<>();
+        this.surfaceAlbedo = 0.4;
+        this.diffusionRate = 0.5;
+
+
     }
 
     public int getXAxis() {
