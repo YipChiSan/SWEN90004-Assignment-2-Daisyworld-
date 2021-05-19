@@ -20,7 +20,6 @@ public class Patch{
         this.surfaceAlbedo = surfaceAlbedo;
         this.diffusionRate = diffusionRate;
         this.solarLumin = solarLumin;
-        this.latch = latch;
         updateTemp();
     }
 
@@ -92,7 +91,7 @@ public class Patch{
         updateTemp();
     }
 
-    @Override
+  
     /**
      * This is a diffuse function.
      * This patch will diffuse until none of its neighbors' temperature is lower than it.
