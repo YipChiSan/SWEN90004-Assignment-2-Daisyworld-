@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.lang.*;
+import java.util.concurrent.CountDownLatch;
 
 public class Patch extends DaisyWorldThread{
     private final  int xAxis;
@@ -9,8 +10,9 @@ public class Patch extends DaisyWorldThread{
     private final float diffusionRate;
     private final float surfaceAlbedo;
     private Float localTemp;
+    private CountDownLatch latch;
 
-    public Patch(int xAxis, int yAxis, List<Patch> neighbours, float surfaceAlbedo, float diffusionRate, float solarLumin) {
+    public Patch(int xAxis, int yAxis, CountDownLatch latch, List<Patch> neighbours, float surfaceAlbedo, float diffusionRate, float solarLumin) {
         super();
         this.xAxis = xAxis;
         this.yAxis = yAxis;
@@ -18,6 +20,7 @@ public class Patch extends DaisyWorldThread{
         this.surfaceAlbedo = surfaceAlbedo;
         this.diffusionRate = diffusionRate;
         this.solarLumin = solarLumin;
+        this.latch = latch;
         updataTemp();
     }
 
@@ -79,6 +82,11 @@ public class Patch extends DaisyWorldThread{
      * This patch will diffuse until none of its neighbors' temperature is lower than it.
      */
     public void run() {
+        try{
+            this.latch.await();
+        } catch(InterruptedException e) {
+            this.interrupt();
+        }
         float tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
         boolean isChanged = false;
         while(!isInterrupted()){
