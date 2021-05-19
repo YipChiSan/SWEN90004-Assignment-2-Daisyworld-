@@ -69,4 +69,8 @@ public class Ground {
             }
         }
     }
+
+    public Patch getPatch(int x, int y) {
+        return this.ground.get(x).get(y);
+    }
 }
