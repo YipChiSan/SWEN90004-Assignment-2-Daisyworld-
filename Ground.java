@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Ground extends DaisyWorldThread {
     
     private ArrayList<ArrayList<Patch>> ground;
+    private double globalTemp;
 
     public Ground(int size, double solarLumin) {
         this.ground = new ArrayList<ArrayList<Patch>>();
@@ -64,6 +65,10 @@ public class Ground extends DaisyWorldThread {
 
             }
         }
+    }
+    
+    public double getGlobalTemp() {
+        return this.globalTemp;
     }
 
     public Patch getPatch(int x, int y) {
