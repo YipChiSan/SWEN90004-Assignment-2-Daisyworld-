@@ -73,4 +73,14 @@ public class Ground {
     public Patch getPatch(int x, int y) {
         return this.ground.get(x).get(y);
     }
+
+    public void start(){
+        Integer size = this.ground.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.ground.get(i).get(y).run();
+            }
+        }
+        this.latch.countDown();
+    }
 }
