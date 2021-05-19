@@ -51,6 +51,10 @@ public class Patch extends DaisyWorldThread{
         this.neighbours.add(neighbor);
     }
 
+    public ArrayList<Patch> getNeighbour() {
+        return this.neighbours;
+    }
+
     public void setDaisy(Daisy daisy) {
         this.daisy = daisy;
         updateTemp();
