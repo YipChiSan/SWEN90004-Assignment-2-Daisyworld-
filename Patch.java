@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.lang.*;
-import java.util.concurrent.CountDownLatch;
 
-public class Patch extends DaisyWorldThread{
+
+public class Patch{
     private final  int xAxis;
     private final int yAxis;
     private ArrayList<Patch> neighbours;
@@ -10,10 +10,9 @@ public class Patch extends DaisyWorldThread{
     private final double diffusionRate;
     private final double surfaceAlbedo;
     private double localTemp;
-    private CountDownLatch latch;
     private double solarLumin;
 
-    public Patch(int xAxis, int yAxis, CountDownLatch latch, ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
+    public Patch(int xAxis, int yAxis, ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
         super();
         this.xAxis = xAxis;
         this.yAxis = yAxis;
@@ -25,11 +24,10 @@ public class Patch extends DaisyWorldThread{
         updateTemp();
     }
 
-    public Patch(int xAxis, int yAxis, CountDownLatch latch, double solarLumin) {
+    public Patch(int xAxis, int yAxis, double solarLumin) {
         super();
         this.xAxis = xAxis;
         this.yAxis = yAxis;
-        this.latch = latch;
         this.solarLumin = solarLumin;
         this.neighbours = new ArrayList<>();
         this.surfaceAlbedo = 0.4;
@@ -96,31 +94,25 @@ public class Patch extends DaisyWorldThread{
 
     @Override
     /**
-     * This is actually a diffuse function.
+     * This is a diffuse function.
      * This patch will diffuse until none of its neighbors' temperature is lower than it.
      */
-    public void run() {
-        try{
-            this.latch.await();
-        } catch(InterruptedException e) {
-            this.interrupt();
-        }
+    public synchronized void diffuse() {
+
         double tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
         boolean isChanged = false;
-        while(!isInterrupted()){
-            try{
-                for (Patch patch : this.neighbours) {
-                    if (patch.getLocalTemp() <= getLocalTemp()) {
-                        patch.addTemp(tempChange);
-                        isChanged = true;
-                    }
-                }
-                if (isChanged) {
-                    addTemp(-tempChange * this.neighbours.size()); 
-                }
-            } catch (InterruptedException e) {
-                this.interrupt();
+        
+            
+        for (Patch patch : this.neighbours) {
+            if (patch.getLocalTemp() <= getLocalTemp()) {
+                patch.addTemp(tempChange);
+                isChanged = true;
             }
         }
+            if (isChanged) {
+                addTemp(-tempChange * this.neighbours.size()); 
+            }
+            
+        
     }
 }
