@@ -28,16 +28,17 @@ public class DaisyWorld extends Thread {
     }
 
     //customized settings constructor
-    public DaisyWorld(int start_whites, int start_blacks, double albedo_of_whites, double albedo_of_blacks, 
-        String scenario,double solar_luminosity,double albedo_of_surface){
+    public DaisyWorld(double startWhitePercent, double startBlackPercent, double albedoOfwhite, double albedoOfblack, 
+        String scenario,double solarLuminosity,double albedoOfsurface, int years){
 
-        this.start_whites=start_whites;
-        this.start_blacks= start_blacks;
-        this.albedo_of_whites = albedo_of_whites;
-        this.albedo_of_blacks = albedo_of_blacks;
+        this.startWhitePercent=startWhitePercent;
+        this.startBlackPercent= startBlackPercent;
+        this.albedoOfwhite = albedoOfwhite;
+        this.albedoOfblack = albedoOfblack;
         this.scenario = scenario;
-        this.solar_luminosity =solar_luminosity;
-        this.albedo_of_surface = albedo_of_surface;
+        this.solarLuminosity =solarLuminosity;
+        this.albedoOfsurface = albedoOfsurface;
+        this.numOfYears = years;
 
 }
     
