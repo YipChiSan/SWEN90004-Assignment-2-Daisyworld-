@@ -47,8 +47,8 @@ public class Patch extends DaisyWorldThread{
         return this.yAxis;
     }
 
-    public List<Patch> getNeighbours() {
-        return this.neighbours;
+    public void addNeighbour(Patch neighbor) {
+        return this.neighbours.add(neighbor);
     }
 
     public void setDaisy(Daisy daisy) {
