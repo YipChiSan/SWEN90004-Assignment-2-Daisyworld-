@@ -1,19 +1,17 @@
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-public class Ground {
+public class Ground extends DaisyWorldThread {
     
     private ArrayList<ArrayList<Patch>> ground;
-    private CountDownLatch latch;
 
     public Ground(int size, double solarLumin) {
         this.ground = new ArrayList<ArrayList<Patch>>();
-        this.latch = new CountDownLatch(1);
         for (int i = 0; i < size; i++) {
             this.ground.add(new ArrayList<Patch>());
             for (int j = 0; j < size; j++) {
                 ArrayList<Patch> currentRow = this.ground.get(i);
-                currentRow.add(new Patch(i, j, this.latch, solarLumin));
+                currentRow.add(new Patch(i, j, solarLumin));
             }
         }
         addNeighbors(this.ground);
@@ -73,13 +71,22 @@ public class Ground {
         return this.ground.get(x).get(y);
     }
 
-    public void start(){
+    public void run(){
         Integer size = this.ground.size();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                this.ground.get(i).get(j).run();
+        while (!isInterrupted()){
+            try {
+                for (int i = 0; i < size; i++) {
+                    for (int j = 0; j < size; j++) {
+                        this.ground.get(i).get(j).updateTemp();
+                        this.ground.get(i).get(j).diffuse();
+                    }
+                }
+
+            } catch (InterruptedException e) {
+                this.interrupt();
             }
         }
-        this.latch.countDown();
+
+        
     }
 }
