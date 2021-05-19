@@ -78,7 +78,7 @@ public class Ground {
         Integer size = this.ground.size();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.ground.get(i).get(y).run();
+                this.ground.get(i).get(j).run();
             }
         }
         this.latch.countDown();
