@@ -57,6 +57,10 @@ public class Patch{
         updateTemp();
     }
 
+    public Daisy getDaisy(){
+        return daisy;
+    }
+
     public Boolean isThereDaisy() {
         if (this.daisy != null) {
             return this.daisy.isAlive(); //Assume there is a function to check the survivability of the daisy
@@ -91,6 +95,9 @@ public class Patch{
         updateTemp();
     }
 
+    public double getAlbedo(){
+        return surfaceAlbedo;
+    }
   
     /**
      * This is a diffuse function.

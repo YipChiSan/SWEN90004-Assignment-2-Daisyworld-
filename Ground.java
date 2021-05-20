@@ -4,20 +4,60 @@ public class Ground extends DaisyWorldThread {
     
     private ArrayList<ArrayList<Patch>> ground;
     private double globalTemp;
+    private int num_of_white;
+    private int num_of_black;
+    private int current_year;
+    private int end_year;
 
-    public Ground(int size, double solarLumin) {
+
+    //All the input parameter
+    private int size;
+    private double solar_luminosity;
+    private int start_whites;
+    private int start_blacks;
+    private double albedo_of_whites;
+    private double albedo_of_blacks;
+    private String scenario; 
+    private double albedo_of_surface;
+
+
+
+    public Ground(int size, double solar_luminosity, int start_whites, int start_blacks, 
+    double albedo_of_blacks, double albedo_of_whites, String scenario, 
+    double albedo_of_surface, int end_year) {
+        this.size = size;
+        this.solar_luminosity = solar_luminosity; 
+        this.start_whites = start_whites;
+        this.albedo_of_blacks = start_blacks;
+        this.albedo_of_blacks = albedo_of_blacks;
+        this.albedo_of_whites = albedo_of_whites;
+        this.scenario = scenario;
+        this.albedo_of_surface = albedo_of_surface;
+        this.end_year = end_year;
+        
+    }
+
+    public void init(){
+        createWorld(size, solar_luminosity);
+        addNeighbors(ground);
+        current_year = 0;
+        updateGlobalTemp();
+
+    }
+
+
+    //create DaisyWorld Patches
+    private void createWorld(int size, double solar_luminosity){
         this.ground = new ArrayList<ArrayList<Patch>>();
         for (int i = 0; i < size; i++) {
             this.ground.add(new ArrayList<Patch>());
             for (int j = 0; j < size; j++) {
                 ArrayList<Patch> currentRow = this.ground.get(i);
-                currentRow.add(new Patch(i, j, solarLumin));
+                currentRow.add(new Patch(i, j, solar_luminosity));
             }
         }
-        addNeighbors(this.ground);
-        updateGlobalTemp();
     }
-
+    //set all neighbors to every patch
     private void addNeighbors(ArrayList<ArrayList<Patch>> ground) {
         Integer size = ground.size();
         for (int i = 0; i < size; i++) {
@@ -88,6 +128,8 @@ public class Ground extends DaisyWorldThread {
         this.globalTemp = tempSum;
     }
 
+
+
     public void run(){
         Integer size = this.ground.size();
         while (!isInterrupted()){
@@ -100,7 +142,7 @@ public class Ground extends DaisyWorldThread {
                     }
                 }
 
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 this.interrupt();
             }
         }
