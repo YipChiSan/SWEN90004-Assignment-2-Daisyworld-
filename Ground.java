@@ -135,9 +135,8 @@ public class Ground extends DaisyWorldThread {
     //update numbers of daisies
     private void updateNumbers(){
         for (int i = 0; i < size; i++) {
-            ArrayList<Patch> currentRow = ground.get(i);
             for (int j = 0; j < size; j++) {
-                Patch patch = currentRow.get(j);
+                Patch patch = ground.get(i).get(j);
                 if(patch.getAlbedo() == albedo_of_whites){
                     num_of_white += 1;
                 }else if(patch.getAlbedo() == albedo_of_blacks){
