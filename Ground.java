@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Ground extends DaisyWorldThread {
     
@@ -42,6 +43,8 @@ public class Ground extends DaisyWorldThread {
         addNeighbors(ground);
         current_year = 0;
         updateGlobalTemp();
+        initSeeding();
+        updateNumbers();
 
     }
 
@@ -129,6 +132,40 @@ public class Ground extends DaisyWorldThread {
     }
 
 
+    //update numbers of daisies
+    private void updateNumbers(){
+        for (int i = 0; i < size; i++) {
+            ArrayList<Patch> currentRow = ground.get(i);
+            for (int j = 0; j < size; j++) {
+                Patch patch = currentRow.get(j);
+                if(patch.getAlbedo() == albedo_of_whites){
+                    num_of_white += 1;
+                }else if(patch.getAlbedo() == albedo_of_blacks){
+                    num_of_black += 1;
+                }
+            }
+        }
+    }
+
+
+    //Random seeding the ground
+    private void initSeeding(){
+        Random ram = new Random();
+        if(start_blacks > 0){
+            Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
+            if(patch.getAlbedo()==albedo_of_surface){
+                patch.setDaisy();//set black
+                start_blacks--;
+            }
+        }
+        if(start_whites > 0){
+            Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
+            if(patch.getAlbedo()==albedo_of_surface){
+                patch.setDaisy();//set white
+                start_whites--;
+            }
+        }
+    }
 
     public void run(){
         Integer size = this.ground.size();
