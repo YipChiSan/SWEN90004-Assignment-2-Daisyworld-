@@ -18,6 +18,7 @@ public class Daisy {
 		alive = true;
 	}
 	
+	// invoke by patch each patch pass along with the neighbours and its current temp
 	public void updateDaisy(ArrayList<Patch> neighbours, double localTemp) {
 		
 		age++;
@@ -50,12 +51,13 @@ public class Daisy {
 	}
 	
 	public double getAlbedo() {
-		return albedo;
+		return this.albedo;
 	}
+	
+	// if this returned false the patch should set the daisy as null in patch
+	// the the resource will get GC
 	public boolean isAlive() {
-		// if this returned false the patch should set the daisy as null in patch
-		// the the resource will get GC
-		return alive;
+		return this.alive;
 	}
 	
 }
