@@ -1,11 +1,13 @@
 
 public class Sim {
+	public static double albedo_of_whites;
+	public static double albedo_of_blacks;
     public static void main(String[] args) {
         //get all inputs
         double start_persent_whites = Double.parseDouble(args[0]);
         double start_persent_black = Double.parseDouble(args[1]);
-        double albedo_of_whites = Double.parseDouble(args[2]);
-        double albedo_of_blacks = Double.parseDouble(args[3]);
+        albedo_of_whites = Double.parseDouble(args[2]);
+        albedo_of_blacks = Double.parseDouble(args[3]);
 
         String scenario = "maintain";
         switch(args[4]){
