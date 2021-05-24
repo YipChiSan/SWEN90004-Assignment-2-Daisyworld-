@@ -22,8 +22,8 @@ public class Ground extends DaisyWorldThread {
     private double albedo_of_surface;
 
     //calculate actual number of Dasiys in the initial state.
-    private int start_whites = (int) Math.floor(size*size*start_persent_whites);
-    private int start_blacks = (int) Math.floor(size*size*start_persent_black);
+    private int start_whites = (int) Math.floor(size*size*start_persent_whites*0.01);
+    private int start_blacks = (int) Math.floor(size*size*start_persent_black*0.01);
 
 
     public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_black, 
@@ -39,6 +39,7 @@ public class Ground extends DaisyWorldThread {
         this.scenario = scenario;
         this.albedo_of_surface = albedo_of_surface;
         this.end_year = end_year;
+        init();
         
     }
 
@@ -49,7 +50,6 @@ public class Ground extends DaisyWorldThread {
         updateGlobalTemp();
         initSeeding();
         updateNumbers();
-
     }
 
 
