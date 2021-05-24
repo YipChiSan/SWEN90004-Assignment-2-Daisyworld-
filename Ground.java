@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -210,7 +211,9 @@ public class Ground extends DaisyWorldThread {
 
 
             csvWriter.close();
-        }
+        }catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     public void run(){
