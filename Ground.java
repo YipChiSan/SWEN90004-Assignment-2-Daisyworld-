@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,7 +18,7 @@ public class Ground extends DaisyWorldThread {
     private int size;
     private double solar_luminosity;
     private double start_persent_whites;
-    private double start_persent_black;
+    private double start_persent_blacks;
     private double albedo_of_whites;
     private double albedo_of_blacks;
     private String scenario; 
@@ -23,16 +26,20 @@ public class Ground extends DaisyWorldThread {
 
     //calculate actual number of Dasiys in the initial state.
     private int start_whites = (int) Math.floor(size*size*start_persent_whites*0.01);
-    private int start_blacks = (int) Math.floor(size*size*start_persent_black*0.01);
+    private int start_blacks = (int) Math.floor(size*size*start_persent_blacks*0.01);
 
 
-    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_black, 
+    //CSV file related parameter
+    private File csvfile = new File("DaisyWorld.csv");
+    private BufferedWriter csvWriter;
+
+    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, 
     double albedo_of_blacks, double albedo_of_whites, String scenario, 
     double albedo_of_surface, int end_year) {
         this.size = size;
         this.solar_luminosity = solar_luminosity; 
         this.start_persent_whites = start_persent_whites;
-        this.start_persent_black = start_persent_black;
+        this.start_persent_blacks = start_persent_blacks;
         this.albedo_of_blacks = start_blacks;
         this.albedo_of_blacks = albedo_of_blacks;
         this.albedo_of_whites = albedo_of_whites;
@@ -50,6 +57,7 @@ public class Ground extends DaisyWorldThread {
         updateGlobalTemp();
         initSeeding();
         updateNumbers();
+        initCSV();
     }
 
 
@@ -167,6 +175,41 @@ public class Ground extends DaisyWorldThread {
                 patch.setDaisy();//set white
                 start_whites--;
             }
+        }
+    }
+
+    private void initCSV(){
+        try{
+            csvWriter = new BufferedWriter(new FileWriter(csvfile, false));
+            csvWriter.write("initial states");
+			
+			csvWriter.newLine();
+            csvWriter.write("start-%-whites" + "," + "start-%-blacks" +","
+                            + "albedo-of-whites" + "," + "albedo-of-blacks" + "," +
+					        "solar-luminosity" + "," + "albedo-of-surface" + "," +
+					        "scenario" + "," + "," + "end_year");
+            
+            csvWriter.newLine();
+            csvWriter.write(start_persent_whites + "," + start_persent_blacks + ","
+                            + albedo_of_whites + "," + albedo_of_blacks + "," +
+                            solar_luminosity + "," + albedo_of_surface +","+
+                            scenario + "," + "," + end_year);
+            
+            csvWriter.newLine();
+
+            csvWriter.newLine();
+            csvWriter.newLine();
+            csvWriter.write("Current year" + "," + "White Daisy numbers" + "," + "Black Daisy numbers" + ","
+            				+ "Global Temprature" + "," + "Luminosity");
+            
+            csvWriter.newLine();
+            csvWriter.write(current_year + "," + start_whites + "," + start_blacks + "," + globalTemp + "," + solar_luminosity);	
+            
+            csvWriter.newLine();  
+
+
+
+            csvWriter.close();
         }
     }
 
