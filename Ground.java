@@ -14,21 +14,25 @@ public class Ground extends DaisyWorldThread {
     //All the input parameter
     private int size;
     private double solar_luminosity;
-    private int start_whites;
-    private int start_blacks;
+    private double start_persent_whites;
+    private double start_persent_black;
     private double albedo_of_whites;
     private double albedo_of_blacks;
     private String scenario; 
     private double albedo_of_surface;
 
+    //calculate actual number of Dasiys in the initial state.
+    private int start_whites = (int) Math.floor(size*size*start_persent_whites);
+    private int start_blacks = (int) Math.floor(size*size*start_persent_black);
 
 
-    public Ground(int size, double solar_luminosity, int start_whites, int start_blacks, 
+    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_black, 
     double albedo_of_blacks, double albedo_of_whites, String scenario, 
     double albedo_of_surface, int end_year) {
         this.size = size;
         this.solar_luminosity = solar_luminosity; 
-        this.start_whites = start_whites;
+        this.start_persent_whites = start_persent_whites;
+        this.start_persent_black = start_persent_black;
         this.albedo_of_blacks = start_blacks;
         this.albedo_of_blacks = albedo_of_blacks;
         this.albedo_of_whites = albedo_of_whites;
