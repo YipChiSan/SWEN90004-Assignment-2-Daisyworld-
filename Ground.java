@@ -179,6 +179,7 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
+    //initialize csv file format
     private void initCSV(){
         try{
             csvWriter = new BufferedWriter(new FileWriter(csvfile, false));
@@ -215,6 +216,22 @@ public class Ground extends DaisyWorldThread {
 			e.printStackTrace();
 		}
     }
+
+
+    //writing the current status
+    public void writeCSV() {
+		try {
+			csvWriter = new BufferedWriter(new FileWriter(csvfile, true));
+
+            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + globalTemp + "," + solar_luminosity);	
+            
+            csvWriter.newLine();     
+            csvWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
     public void run(){
         Integer size = this.ground.size();
