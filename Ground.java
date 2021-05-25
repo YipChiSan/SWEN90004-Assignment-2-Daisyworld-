@@ -34,6 +34,9 @@ public class Ground extends DaisyWorldThread {
     private File csvfile = new File("DaisyWorld.csv");
     private BufferedWriter csvWriter;
 
+    //interruption controller
+    private boolean interrupt = false;
+
     public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, 
     double albedo_of_blacks, double albedo_of_whites, String scenario, 
     double albedo_of_surface, int end_year) {
@@ -51,6 +54,17 @@ public class Ground extends DaisyWorldThread {
         
     }
 
+    public double getGlobalTemp() {
+        return this.globalTemp;
+    }
+
+    public Patch getPatch(int x, int y) {
+        return this.ground.get(x).get(y);
+    }
+
+
+    //initialize methods
+    //init the world
     public void init(){
         createWorld(size, solar_luminosity);
         addNeighbors(ground);
@@ -124,40 +138,7 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
-    public double getGlobalTemp() {
-        return this.globalTemp;
-    }
 
-    public Patch getPatch(int x, int y) {
-        return this.ground.get(x).get(y);
-    }
-
-    private void updateGlobalTemp() {
-        double tempSum = 0;
-        int size = this.ground.size();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                tempSum += this.ground.get(i).get(j).getLocalTemp();
-            }
-        }
-
-        this.globalTemp = tempSum;
-    }
-
-
-    //update numbers of daisies
-    private void updateNumbers(){
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                Patch patch = ground.get(i).get(j);
-                if(patch.getAlbedo() == albedo_of_whites){
-                    num_of_white += 1;
-                }else if(patch.getAlbedo() == albedo_of_blacks){
-                    num_of_black += 1;
-                }
-            }
-        }
-    }
 
 
     //Random seeding the ground
@@ -182,6 +163,7 @@ public class Ground extends DaisyWorldThread {
             }
         }
     }
+
 
     //initialize csv file format
     private void initCSV(){
@@ -221,6 +203,73 @@ public class Ground extends DaisyWorldThread {
 		}
     }
 
+    //update methods
+    //update global temperature
+    private void updateGlobalTemp() {
+        double tempSum = 0;
+        int size = this.ground.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                tempSum += this.ground.get(i).get(j).getLocalTemp();
+            }
+        }
+
+        this.globalTemp = tempSum;
+    }
+
+
+    //update numbers of daisies
+    private void updateNumbers(){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Patch patch = ground.get(i).get(j);
+                if(patch.getAlbedo() == albedo_of_whites){
+                    num_of_white += 1;
+                }else if(patch.getAlbedo() == albedo_of_blacks){
+                    num_of_black += 1;
+                }
+            }
+        }
+    }
+
+    private void seeding(){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                Patch patch = ground.get(i).get(j);
+                Daisy d = patch.getDaisy();
+                d.updateDaisy(patch.getNeighbour(), patch.getLocalTemp());
+            }
+        }
+    }
+
+    private void updatePatchTemp(){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.ground.get(i).get(j).updateTemp();             
+            }
+        }
+    }
+
+    private void diffusePatch(){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.ground.get(i).get(j).diffuse();            
+            }
+        }
+    }
+
+    private void scenarioEffect(){
+        if(scenario == "ramp"){
+            if(current_year > 200 && current_year <= 400){
+                solar_luminosity += 0.005;
+            }
+            if(current_year > 600 && current_year <= 800){
+                solar_luminosity -= 0.0025;
+            }
+        }else if(scenario == "low") solar_luminosity = 0.6;
+        else if(scenario == "our") solar_luminosity = 1.0;
+        else if(scenario == "high") solar_luminosity = 1.4;
+    }
 
     //writing the current status
     public void writeCSV() {
@@ -238,16 +287,25 @@ public class Ground extends DaisyWorldThread {
 	
 
     public void run(){
-        Integer size = this.ground.size();
-        while (!isInterrupted()){
+        
+        while (current_year < end_year)
             try {
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < size; j++) {
-                        this.ground.get(i).get(j).updateTemp();
-                        this.ground.get(i).get(j).diffuse();
-                        updateGlobalTemp();
-                    }
-                }
+                current_year+=1;
+
+                scenarioEffect();
+
+                updatePatchTemp();
+
+                diffusePatch();
+
+                seeding();
+
+                updateNumbers();
+
+                updateGlobalTemp();
+
+                writeCSV();
+                
 
             } catch (Exception e) {
                 this.interrupt();
