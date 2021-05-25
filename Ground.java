@@ -211,7 +211,7 @@ public class Ground extends DaisyWorldThread {
             }
         }
 
-        this.globalTemp = tempSum;
+        this.globalTemp = tempSum / (size * size);
     }
 
 
@@ -311,3 +311,4 @@ public class Ground extends DaisyWorldThread {
 
         
     }
+
