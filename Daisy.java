@@ -25,7 +25,7 @@ public class Daisy {
 		// hard coded here 
 		if (age <= 25) {
 			Random r = new Random();
-			double seedThreshold = (0.1457 * localTemp) - (0.032 * (localTemp*localTemp)) - 0.6443;
+			double seedThreshold = (0.1457 * localTemp) - (0.0032 * (localTemp*localTemp)) - 0.6443;
 			double randomDouble = r.nextDouble();
 			if (randomDouble < seedThreshold) {
 				for (Iterator<Patch> iterator = neighbours.iterator(); iterator.hasNext();) {
