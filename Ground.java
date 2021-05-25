@@ -350,8 +350,9 @@ public class Ground extends DaisyWorldThread {
 
                 seeding();
 
+                addNeighbors(ground);
+
                 updateNumbers();
-                System.out.println(num_of_white);
 
                 updateGlobalTemp();
                 
