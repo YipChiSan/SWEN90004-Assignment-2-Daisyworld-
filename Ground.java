@@ -34,9 +34,6 @@ public class Ground extends DaisyWorldThread {
     private File csvfile = new File("DaisyWorld.csv");
     private BufferedWriter csvWriter;
 
-    //interruption controller
-    private boolean interrupt = false;
-
     public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, 
     double albedo_of_blacks, double albedo_of_whites, String scenario, 
     double albedo_of_surface, int end_year) {
