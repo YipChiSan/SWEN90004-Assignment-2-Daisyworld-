@@ -26,8 +26,8 @@ public class Ground extends DaisyWorldThread {
     private double albedo_of_surface;
 
     //calculate actual number of Dasiys in the initial state.
-    private int start_whites = (int) Math.floor(size*size*start_persent_whites*0.01);
-    private int start_blacks = (int) Math.floor(size*size*start_persent_blacks*0.01);
+    private int start_whites;
+    private int start_blacks;
 
 
     //CSV file related parameter
@@ -47,6 +47,8 @@ public class Ground extends DaisyWorldThread {
         this.scenario = scenario;
         this.albedo_of_surface = albedo_of_surface;
         this.end_year = end_year;
+        this.start_whites = (int) Math.floor(size*size*start_persent_whites*0.01);
+        this.start_blacks = (int) Math.floor(size*size*start_persent_blacks*0.01);
         init();
         
     }
@@ -68,7 +70,6 @@ public class Ground extends DaisyWorldThread {
         current_year = 0;
         updateGlobalTemp();
         initSeeding();
-        updateNumbers();
         initCSV();
     }
 
@@ -148,6 +149,7 @@ public class Ground extends DaisyWorldThread {
                 black.initialiseAsBlack();
                 patch.setDaisy(black);//set black
                 start_blacks--;
+                num_of_black++;
             }
         }
         if(start_whites > 0){
@@ -157,6 +159,7 @@ public class Ground extends DaisyWorldThread {
                 white.initialiseAsWhite();
                 patch.setDaisy(white);//set white
                 start_whites--;
+                num_of_white++;
             }
         }
     }
@@ -234,6 +237,7 @@ public class Ground extends DaisyWorldThread {
             for (int j = 0; j < size; j++) {
                 Patch patch = ground.get(i).get(j);
                 Daisy d = patch.getDaisy();
+
                 d.updateDaisy(patch.getNeighbour(), patch.getLocalTemp());
             }
         }
