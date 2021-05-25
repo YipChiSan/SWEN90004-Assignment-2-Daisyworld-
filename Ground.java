@@ -166,14 +166,18 @@ public class Ground extends DaisyWorldThread {
         if(start_blacks > 0){
             Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
             if(patch.getAlbedo()==albedo_of_surface){
-                patch.setDaisy();//set black
+                Daisy black = new Daisy();
+                black.initialiseAsBlack();
+                patch.setDaisy(black);//set black
                 start_blacks--;
             }
         }
         if(start_whites > 0){
             Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
             if(patch.getAlbedo()==albedo_of_surface){
-                patch.setDaisy();//set white
+                Daisy white = new Daisy();
+                white.initialiseAsWhite();
+                patch.setDaisy(white);//set white
                 start_whites--;
             }
         }
