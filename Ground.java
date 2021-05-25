@@ -160,7 +160,7 @@ public class Ground extends DaisyWorldThread {
 
         if ((i - 1 >= 0) && (j - 1 >= 0)) {
             Patch upLeftPatch = this.ground.get(i - 1).get(j - 1);
-            groundNeighbours.add(upLeftPatch)
+            groundNeighbours.add(upLeftPatch);
         }
 
         if ((i + 1 < size) && (j - 1 >= 0)) {
