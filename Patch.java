@@ -80,29 +80,33 @@ public class Patch{
      * This function should be run right after a patch is created.
      * @param solarLumin Solar luminosity
      */
-    public synchronized void updateTemp() {
+    public void updateTemp() {
         double localHeating = 72 * Math.log(getAbsorbedLumin(this.solarLumin)) + 80;
         this.localTemp = (this.localTemp + localHeating) / 2;
     }
 
-    public synchronized double getLocalTemp(){
+    public double getLocalTemp(){
         return this.localTemp;
     }
 
-    public synchronized void addTemp(double addedTemp){
+    public void addTemp(double addedTemp){
         this.localTemp += addedTemp;
         updateTemp();
     }
 
     public double getAlbedo(){
+        if (isThereDaisy()) {
+            return daisy.getAlbedo();
+        } else{
         return surfaceAlbedo;
+        }
     }
   
     /**
      * This is a diffuse function.
      * This patch will diffuse until none of its neighbors' temperature is lower than it.
      */
-    public synchronized void diffuse() {
+    public void diffuse() {
 
         double tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
         boolean isChanged = false;
