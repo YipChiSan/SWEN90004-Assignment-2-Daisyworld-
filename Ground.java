@@ -305,7 +305,7 @@ public class Ground extends DaisyWorldThread {
                 
 
             } catch (Exception e) {
-                this.interrupt();
+                System.out.println(e);
             }
         }
 

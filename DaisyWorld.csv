@@ -1,0 +1,7 @@
+initial states
+start-%-whites,start-%-blacks,albedo-of-whites,albedo-of-blacks,solar-luminosity,albedo-of-surface,scenario,,end_year
+20.0,20.0,0.75,0.25,0.6,0.4,maintain,,5
+
+
+Current year,White Daisy numbers,Black Daisy numbers,Global Temprature,Luminosity
+0,0,0,34.570375969553936,0.6

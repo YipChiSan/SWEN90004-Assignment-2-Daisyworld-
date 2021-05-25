@@ -3,10 +3,7 @@ public class Sim {
 	public static double albedo_of_whites;
 	public static double albedo_of_blacks;
     public static void main(String[] args) {
-        //get all inputs
-        if(args[7] == null){
-            System.out.println("missing parameter");
-        }
+
 
         double start_persent_whites = Double.parseDouble(args[0]);
         double start_persent_black = Double.parseDouble(args[1]);
