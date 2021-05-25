@@ -144,7 +144,7 @@ public class Ground extends DaisyWorldThread {
         Random ram = new Random();
         while(start_blacks > 0){
             Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
-            if(patch.getAlbedo()==albedo_of_surface){
+            if(patch.getAlbedo() == albedo_of_surface){
                 Daisy black = new Daisy();
                 black.initialiseAsBlack();
                 patch.setDaisy(black);//set black
@@ -154,7 +154,7 @@ public class Ground extends DaisyWorldThread {
         }
         while(start_whites > 0){
             Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
-            if(patch.getAlbedo()==albedo_of_surface){
+            if(patch.getAlbedo() == albedo_of_surface){
                 Daisy white = new Daisy();
                 white.initialiseAsWhite();
                 patch.setDaisy(white);//set white
@@ -222,12 +222,13 @@ public class Ground extends DaisyWorldThread {
     private void updateNumbers(){
         num_of_black = 0;
         num_of_white = 0;
+        
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 Patch patch = ground.get(i).get(j);
-                if(patch.getDaisy().getAlbedo() == albedo_of_whites){
+                if(patch.getAlbedo() == albedo_of_whites){
                     num_of_white += 1;
-                }else if(patch.getDaisy().getAlbedo() == albedo_of_blacks){
+                }else if(patch.getAlbedo() == albedo_of_blacks){
                     num_of_black += 1;
                 }
             }
@@ -238,8 +239,10 @@ public class Ground extends DaisyWorldThread {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 Patch patch = ground.get(i).get(j);
-                Daisy d = patch.getDaisy();
-                d.updateDaisy(patch.getNeighbour(), patch.getLocalTemp());
+                if(patch.isThereDaisy() == true){
+                    patch.getDaisy().updateDaisy(patch.getNeighbour(), patch.getLocalTemp());
+                }
+                
             }
         }
     }
@@ -289,7 +292,7 @@ public class Ground extends DaisyWorldThread {
 	
 
     public void run(){
-        
+        System.out.println("start count");
         while (current_year < end_year)
             try {
                 current_year+=1;
@@ -304,6 +307,7 @@ public class Ground extends DaisyWorldThread {
                 seeding();
 
                 updateNumbers();
+                System.out.println(num_of_white);
 
                 updateGlobalTemp();
                 
