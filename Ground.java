@@ -191,7 +191,7 @@ public class Ground extends DaisyWorldThread {
             				+ "Global Temprature" + "," + "Luminosity");
             
             csvWriter.newLine();
-            csvWriter.write(current_year + "," + start_whites + "," + start_blacks + "," + globalTemp + "," + solar_luminosity);	
+            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + globalTemp + "," + solar_luminosity);	
             
             csvWriter.newLine();  
 
@@ -220,6 +220,8 @@ public class Ground extends DaisyWorldThread {
 
     //update numbers of daisies
     private void updateNumbers(){
+        num_of_black = 0;
+        num_of_white = 0;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 Patch patch = ground.get(i).get(j);
@@ -237,10 +239,6 @@ public class Ground extends DaisyWorldThread {
             for (int j = 0; j < size; j++) {
                 Patch patch = ground.get(i).get(j);
                 Daisy d = patch.getDaisy();
-                if(d == null){
-                    d = new Daisy();
-                    patch.setDaisy(d);
-                }
                 d.updateDaisy(patch.getNeighbour(), patch.getLocalTemp());
             }
         }
@@ -295,7 +293,7 @@ public class Ground extends DaisyWorldThread {
         while (current_year < end_year)
             try {
                 current_year+=1;
-
+                
                 scenarioEffect();
 
                 updatePatchTemp();

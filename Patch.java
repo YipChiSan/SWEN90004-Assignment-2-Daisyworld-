@@ -5,7 +5,7 @@ public class Patch{
     private final  int xAxis;
     private final int yAxis;
     private ArrayList<Patch> neighbours;
-    Daisy daisy;
+    Daisy daisy = new Daisy();
     private final double diffusionRate;
     private final double surfaceAlbedo;
     private double localTemp;
