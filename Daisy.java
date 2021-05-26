@@ -6,16 +6,20 @@ public class Daisy {
 	private double albedo;
 	private boolean alive;
 	//////////////////////
-	
-	public void  initialiseAsBlack () {
+	// only invoke in the set up phrase in 
+	public void initialiseRandomAge() {
+		//
 		Random rand = new Random();
 		age = rand.nextInt(26);
+	}
+	
+	public void  initialiseAsBlack () {
+		age = 0;
 		albedo = Sim.albedo_of_blacks;
 		alive = true;
 	}
 	public void initialiseAsWhite () {
-		Random rand = new Random();
-		age = rand.nextInt(26);
+		age = 0;
 		albedo = Sim.albedo_of_whites;
 		alive = true;
 	}
