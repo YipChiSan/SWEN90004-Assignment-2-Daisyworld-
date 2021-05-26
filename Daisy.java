@@ -26,9 +26,10 @@ public class Daisy {
 		albedo = Sim.albedo_of_whites;
 		alive = true;
 	}
+	
 	// state transition of a daisy between years
 	// invoke by patch each patch pass along with the neighbours and its local
-    // temperature
+    	// temperature
 	public void updateDaisy(ArrayList<Patch> neighbours, double localTemp) {
 		age++;
 		// hard coded here 
@@ -60,6 +61,7 @@ public class Daisy {
 			alive = false;
 		}
 	}
+	
 	// returns the albedo of the daisy
 	public double getAlbedo() {
 		return this.albedo;
@@ -69,6 +71,5 @@ public class Daisy {
 	// the the resource will get GC
 	public boolean isAlive() {
 		return this.alive;
-	}
-	
+	}	
 }
