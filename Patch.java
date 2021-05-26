@@ -69,11 +69,9 @@ public class Patch{
     }
 
     private double getAbsorbedLumin(double solarLumin) {
-        if (!isThereDaisy()) {
-            return (1 - this.surfaceAlbedo) * solarLumin;
-        } else {
-            return (1 - this.daisy.getAlbedo()) * solarLumin;
-        }
+        
+        return (1 - getAlbedo()) * solarLumin;
+        
     }
 
     /**
