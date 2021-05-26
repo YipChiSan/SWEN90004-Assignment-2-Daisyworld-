@@ -153,6 +153,7 @@ public class Ground extends DaisyWorldThread {
             if(patch.getAlbedo() == albedo_of_surface){
                 Daisy black = new Daisy();
                 black.initialiseAsBlack();
+                black.initialiseRandomAge();
                 patch.setDaisy(black);//set black
                 start_blacks--;
                 num_of_black++;
@@ -163,6 +164,7 @@ public class Ground extends DaisyWorldThread {
             if(patch.getAlbedo() == albedo_of_surface){
                 Daisy white = new Daisy();
                 white.initialiseAsWhite();
+                white.initialiseRandomAge();
                 patch.setDaisy(white);//set white
                 start_whites--;
                 num_of_white++;
