@@ -66,7 +66,7 @@ public class Ground extends DaisyWorldThread {
     //init the world
     public void init(){
         createWorld(size, solar_luminosity);
-        addNeighbors(ground);
+        addNeighbors();
         current_year = 0;
         updateGlobalTemp();
         initSeeding();
@@ -86,101 +86,62 @@ public class Ground extends DaisyWorldThread {
         }
     }
     //set all neighbors to every patch
-    private void addNeighbors(ArrayList<ArrayList<Patch>> ground) {
-        Integer size = ground.size();
+    private void addNeighbors() {
+        int left;
+        int right;
+        int up;
+        int down;
+        
         for (int i = 0; i < size; i++) {
             ArrayList<Patch> currentRow = this.ground.get(i);
             for (int j = 0; j < size; j++) {
                 Patch currentPatch = currentRow.get(j);
-                if (j-1 >= 0) {
-                    Patch leftPatch = this.ground.get(i).get(j-1);
-                    currentPatch.addNeighbour(leftPatch);
+                if (j - 1 >= 0) {
+                    left = j-1;
+                } else{
+                    left = size - 1;
                 }
 
                 if (j + 1 < size) {
-                    Patch rightPatch = this.ground.get(i).get(j+1);
-                    currentPatch.addNeighbour(rightPatch);
+                    right = j + 1;
+                } else {
+                    right = 0;
                 }
 
                 if (i - 1 >= 0) {
-                    Patch upPatch = this.ground.get(i - 1).get(j);
-                    currentPatch.addNeighbour(upPatch);
+                    up = i - 1;
+                } else {
+                    up = size - 1;
                 }
 
                 if (i + 1 < size) {
-                    Patch downPatch = this.ground.get(i + 1).get(j);
-                    currentPatch.addNeighbour(downPatch);
+                    down = i + 1;
+                } else {
+                    down = 0;
                 }
 
-                if ((i - 1 >= 0) && (j - 1 >= 0)) {
-                    Patch upLeftPatch = this.ground.get(i - 1).get(j - 1);
-                    currentPatch.addNeighbour(upLeftPatch);
-                }
+                Patch lefPatch = this.ground.get(i).get(left);
+                Patch rightPatch = this.ground.get(i).get(right);
+                Patch upPatch = this.ground.get(up).get(j);
+                Patch downPatch = this.ground.get(down).get(j);
+                Patch upleftPatch = this.ground.get(up).get(left);
+                Patch uprightPatch = this.ground.get(up).get(right);
+                Patch downleftPatch = this.ground.get(down).get(left);
+                Patch downrightPatch = this.ground.get(down).get(right);
 
-                if ((i + 1 < size) && (j - 1 >= 0)) {
-                    Patch downLeftPatch = this.ground.get(i + 1).get(j - 1);
-                    currentPatch.addNeighbour(downLeftPatch);
-                }
-
-                if ((i - 1 >= 0) && (j + 1 < size)) {
-                    Patch upRightPatch = this.ground.get(i - 1).get(j + 1);
-                    currentPatch.addNeighbour(upRightPatch);
-                }
-
-                if ((i + 1 < size) && (j + 1 < size)) {
-                    Patch downRightPatch = this.ground.get(i + 1).get(j + 1);
-                    currentPatch.addNeighbour(downRightPatch);
-                }
+                currentPatch.addNeighbour(lefPatch);
+                currentPatch.addNeighbour(rightPatch);
+                currentPatch.addNeighbour(upPatch);
+                currentPatch.addNeighbour(downPatch);
+                currentPatch.addNeighbour(upleftPatch);
+                currentPatch.addNeighbour(uprightPatch);
+                currentPatch.addNeighbour(downleftPatch);
+                currentPatch.addNeighbour(downrightPatch);
+                
 
             }
         }
     }
-
-    private ArrayList<Patch> getGrondNeighbours(int i, int j){
-    	ArrayList<Patch> groundNeighbours = new ArrayList<Patch>();
-        if (j-1 >= 0) {
-            Patch leftPatch = this.ground.get(i).get(j-1);
-            groundNeighbours.add(leftPatch);
-        }
-
-        if (j + 1 < size) {
-            Patch rightPatch = this.ground.get(i).get(j+1);
-            groundNeighbours.add(rightPatch);
-        }
-
-        if (i - 1 >= 0) {
-            Patch upPatch = this.ground.get(i - 1).get(j);
-            groundNeighbours.add(upPatch);
-        }
-
-        if (i + 1 < size) {
-            Patch downPatch = this.ground.get(i + 1).get(j);
-            groundNeighbours.add(downPatch);
-        }
-
-        if ((i - 1 >= 0) && (j - 1 >= 0)) {
-            Patch upLeftPatch = this.ground.get(i - 1).get(j - 1);
-            groundNeighbours.add(upLeftPatch);
-        }
-
-        if ((i + 1 < size) && (j - 1 >= 0)) {
-            Patch downLeftPatch = this.ground.get(i + 1).get(j - 1);
-            groundNeighbours.add(downLeftPatch);
-        }
-
-        if ((i - 1 >= 0) && (j + 1 < size)) {
-            Patch upRightPatch = this.ground.get(i - 1).get(j + 1);
-            groundNeighbours.add(upRightPatch);
-        }
-
-        if ((i + 1 < size) && (j + 1 < size)) {
-            Patch downRightPatch = this.ground.get(i + 1).get(j + 1);
-            groundNeighbours.add(downRightPatch);
-        }
-    	return groundNeighbours;
-    }
-
-
 
     //Random seeding the ground
     private void initSeeding(){
@@ -284,7 +245,7 @@ public class Ground extends DaisyWorldThread {
                 Patch patch = ground.get(i).get(j);
                 
                 if(patch.isThereDaisy() == true){
-                    patch.getDaisy().updateDaisy(getGrondNeighbours(i,j), patch.getLocalTemp());
+                    patch.getDaisy().updateDaisy(patch.getNeighbour(), patch.getLocalTemp());
                 }
                 
             }
@@ -336,7 +297,6 @@ public class Ground extends DaisyWorldThread {
 	
 
     public void run(){
-        System.out.println("start count");
         while (current_year < end_year)
             try {
                 current_year+=1;
@@ -349,8 +309,6 @@ public class Ground extends DaisyWorldThread {
                 diffusePatch();
 
                 seeding();
-
-                addNeighbors(ground);
 
                 updateNumbers();
 
