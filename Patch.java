@@ -53,7 +53,6 @@ public class Patch{
 
     public void setDaisy(Daisy daisy) {
         this.daisy = daisy;
-        updateTemp();
     }
 
     public Daisy getDaisy(){
