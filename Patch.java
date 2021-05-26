@@ -19,7 +19,7 @@ public class Patch{
         this.surfaceAlbedo = surfaceAlbedo;
         this.diffusionRate = diffusionRate;
         this.solarLumin = solarLumin;
-        updateTemp();
+        this.localTemp = 0;
     }
 
     public Patch(int xAxis, int yAxis, double solarLumin) {
@@ -30,7 +30,7 @@ public class Patch{
         this.neighbours = new ArrayList<>();
         this.surfaceAlbedo = 0.4;
         this.diffusionRate = 0.5;
-        updateTemp();
+        this.localTemp = 0;
 
 
     }
@@ -89,7 +89,6 @@ public class Patch{
 
     public void addTemp(double addedTemp){
         this.localTemp += addedTemp;
-        updateTemp();
     }
 
     public double getAlbedo(){
@@ -107,18 +106,18 @@ public class Patch{
     public void diffuse() {
 
         double tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
-        boolean isChanged = false;
         
             
         for (Patch patch : this.neighbours) {
-            if (patch.getLocalTemp() <= getLocalTemp()) {
-                patch.addTemp(tempChange);
-                isChanged = true;
-            }
+           
+            patch.addTemp(tempChange);
+            addTemp(-tempChange);
+                
+            
         }
-            if (isChanged) {
-                addTemp(-tempChange * this.neighbours.size()); 
-            }
+            
+        
+           
             
         
     }
