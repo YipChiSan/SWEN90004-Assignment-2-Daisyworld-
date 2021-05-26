@@ -274,9 +274,14 @@ public class Ground extends DaisyWorldThread {
             if(current_year > 200 && current_year <= 400){
                 solar_luminosity += 0.005;
             }
-            if(current_year > 600 && current_year <= 800){
+            if(current_year > 600 && current_year <= 850){
                 solar_luminosity -= 0.0025;
             }
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j ++) {
+                    this.ground.get(i).get(j).setSolarLumin(solar_luminosity);
+                }
+            } 
         }else if(scenario == "low") solar_luminosity = 0.6;
         else if(scenario == "our") solar_luminosity = 1.0;
         else if(scenario == "high") solar_luminosity = 1.4;
