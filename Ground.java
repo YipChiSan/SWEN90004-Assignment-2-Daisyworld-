@@ -68,9 +68,10 @@ public class Ground extends DaisyWorldThread {
         createWorld(size, solar_luminosity);
         addNeighbors();
         current_year = 0;
+        initSeeding();
         updatePatchTemp();
         updateGlobalTemp();
-        initSeeding();
+        
         initCSV();
     }
 
