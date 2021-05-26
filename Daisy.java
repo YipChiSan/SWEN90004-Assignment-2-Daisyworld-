@@ -8,12 +8,14 @@ public class Daisy {
 	//////////////////////
 	
 	public void  initialiseAsBlack () {
-		age = 0;
+		Random rand = new Random();
+		age = rand.nextInt(26);
 		albedo = Sim.albedo_of_blacks;
 		alive = true;
 	}
 	public void initialiseAsWhite () {
-		age = 0;
+		Random rand = new Random();
+		age = rand.nextInt(26);
 		albedo = Sim.albedo_of_whites;
 		alive = true;
 	}
