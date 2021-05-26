@@ -10,7 +10,7 @@ public class Daisy {
 	public void initialiseRandomAge() {
 		//
 		Random rand = new Random();
-		age = rand.nextInt(26);
+		age = rand.nextInt(25);
 	}
 	
 	public void  initialiseAsBlack () {
