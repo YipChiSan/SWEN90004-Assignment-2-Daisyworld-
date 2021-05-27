@@ -49,7 +49,7 @@ public class Daisy {
 		if (age <= 25) {
 			
 			// Yello daisy can change its color when the localTemp is too hot or too cold
-			if (this.isYello) {
+			if (isYellow()) {
 				if (localTemp > 30 && this.albedo < Sim.albedo_of_whites) {
 					this.albedo += 0.025;
 				} else if (localTemp < 10 && this.albedo > Sim.albedo_of_blacks) {
@@ -73,7 +73,7 @@ public class Daisy {
 						if (this.albedo == Sim.albedo_of_whites) {
 							d.initialiseAsWhite();
 						}
-						if (isYello) {
+						if (isYellow()) {
 							d.initialiseAsYellow();
 						}
 						p.setDaisy(d);
