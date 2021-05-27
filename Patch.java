@@ -29,10 +29,12 @@ public class Patch{
 
     }
 
+    //Add a patch to the neighbor list 
     public void addNeighbour(Patch neighbor) {
         this.neighbours.add(neighbor);
     }
 
+    //Return neighbor list
     public ArrayList<Patch> getNeighbour() {
         return this.neighbours;
     }
@@ -45,13 +47,15 @@ public class Patch{
         return daisy;
     }
 
+    //Change solar luminosity if necessary
     public void setSolarLumin(double solarLumin) {
         this.solarLumin = solarLumin;
     }
 
+    //Check whether there is a live daisy
     public Boolean isThereDaisy() {
         if (this.daisy != null) {
-            return this.daisy.isAlive(); //Assume there is a function to check the survivability of the daisy
+            return this.daisy.isAlive(); 
         } else {
             return false;
         }
@@ -76,10 +80,12 @@ public class Patch{
         return this.localTemp;
     }
 
+    //Use when a neighbor patch want to diffuse some heat to this patch
     public void addTemp(double addedTemp){
         this.localTemp += addedTemp;
     }
 
+    //Return albedo of this patch
     public double getAlbedo(){
         if (isThereDaisy()) {
             return daisy.getAlbedo();
