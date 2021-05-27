@@ -1,6 +1,7 @@
-Step 1: Compile this java file, e.g. javac Sim.java
+Step 1: Compile the original model/extension model, via javac Sim.java.
+	To complie the extension model change the directory to /extension then execute the above command
 
-Version 1: Code without extension
+Version 1: To run simulation without extension
 Step 2: run the Sim.java file with 8 arguments,
 		1st argument is the start percentage of white daisy, range between 0 to 50.
 		2nd argument is the start percentage of black daisy, range between 0 to 50.
@@ -13,7 +14,7 @@ Step 2: run the Sim.java file with 8 arguments,
 
 For example: java Sim 20 20 0.75 0.25 maintain 0.8 0.4 1500
 
-Version 2: Code with extension
+Version 2: To run simulation with extension
 Step 2: run the Sim.java file with 10 arguments,
 		1st argument is the start percentage of white daisy, range between 0 to 100.
 		2nd argument is the start percentage of black daisy, range between 0 to 100.
