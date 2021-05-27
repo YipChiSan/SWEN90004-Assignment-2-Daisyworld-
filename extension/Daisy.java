@@ -41,7 +41,7 @@ public class Daisy {
 		age++;
 		// hard coded here 
 		if (age <= 25) {
-			Boolean isYello = this.albedo == (Sim.albedo_of_blacks + Sim.albedo_of_whites) / 2;
+			boolean isYello = this.albedo == (Sim.albedo_of_blacks + Sim.albedo_of_whites) / 2;
 			// Yello daisy can change its color when the localTemp is too hot or too cold
 			if (isYello) {
 				if (localTemp > 30 && this.albedo < Sim.albedo_of_whites) {
