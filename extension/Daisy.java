@@ -5,6 +5,7 @@ public class Daisy {
 	private volatile int age;
 	private double albedo;
 	private boolean alive;
+	private boolean isYellow = false;
 	
 	// randomise the age of the daisy, only invoke in the initialise phrase
 	public void initialiseRandomAge() {
@@ -31,7 +32,12 @@ public class Daisy {
 	public void initialiseAsYellow () {
 		age = 0;
 		albedo = (Sim.albedo_of_blacks + Sim.albedo_of_whites) / 2;
+		isYellow = true;
 		alive = true;
+	}
+
+	public boolean isYellow() {
+		return this.isYellow;
 	}
 	
 	// state transition of a daisy between years
@@ -41,9 +47,9 @@ public class Daisy {
 		age++;
 		// hard coded here 
 		if (age <= 25) {
-			boolean isYello = this.albedo == (Sim.albedo_of_blacks + Sim.albedo_of_whites) / 2;
+			
 			// Yello daisy can change its color when the localTemp is too hot or too cold
-			if (isYello) {
+			if (this.isYello) {
 				if (localTemp > 30 && this.albedo < Sim.albedo_of_whites) {
 					this.albedo += 0.025;
 				} else if (localTemp < 10 && this.albedo > Sim.albedo_of_blacks) {
