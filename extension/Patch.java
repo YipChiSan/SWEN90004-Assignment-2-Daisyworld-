@@ -9,7 +9,10 @@ public class Patch{
     private double localTemp;
     private double solarLumin;
 
-    public Patch(ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
+    public Patch(ArrayList<Patch> neighbours, 
+                 double surfaceAlbedo, 
+                 double diffusionRate, 
+                 double solarLumin) {
         super();
         this.neighbours = neighbours;
         this.surfaceAlbedo = surfaceAlbedo;
@@ -57,7 +60,7 @@ public class Patch{
     //Check if there is a daisy
     public Boolean isThereDaisy() {
         if (this.daisy != null) {
-            return this.daisy.isAlive(); //Assume there is a function to check the survivability of the daisy
+            return this.daisy.isAlive();
         } else {
             return false;
         }
