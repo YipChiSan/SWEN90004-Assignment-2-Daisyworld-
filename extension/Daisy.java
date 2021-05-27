@@ -26,6 +26,13 @@ public class Daisy {
 		albedo = Sim.albedo_of_whites;
 		alive = true;
 	}
+
+	// set daisy as yellow
+	public void initialiseAsYellow () {
+		age = 0;
+		albedo = (Sim.albedo_of_blacks + Sim.albedo_of_whites) / 2;
+		alive = true;
+	}
 	
 	// state transition of a daisy between years
 	// invoke by patch each patch pass along with the neighbours and its local
@@ -34,6 +41,16 @@ public class Daisy {
 		age++;
 		// hard coded here 
 		if (age <= 25) {
+			Boolean isYello = this.albedo == (Sim.albedo_of_blacks + Sim.albedo_of_whites) / 2;
+			// Yello daisy can change its color when the localTemp is too hot or too cold
+			if (isYello) {
+				if (localTemp > 30 && this.albedo < Sim.albedo_of_whites) {
+					this.albedo += 0.025;
+				} else if (localTemp < 10 && this.albedo > Sim.albedo_of_blacks) {
+					this.albedo -= 0.025;
+				}
+			}
+			//
 			Random r = new Random();
 			double seedThreshold = 
             (0.1457 * localTemp) - (0.0032 * (localTemp*localTemp)) - 0.6443;
@@ -49,6 +66,9 @@ public class Daisy {
 						}
 						if (this.albedo == Sim.albedo_of_whites) {
 							d.initialiseAsWhite();
+						}
+						if (isYello) {
+							d.initialiseAsYellow();
 						}
 						p.setDaisy(d);
 						break;
