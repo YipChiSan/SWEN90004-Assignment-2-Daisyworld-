@@ -83,7 +83,7 @@ public class Ground extends DaisyWorldThread {
             this.ground.add(new ArrayList<Patch>());
             for (int j = 0; j < size; j++) {
                 ArrayList<Patch> currentRow = this.ground.get(i);
-                currentRow.add(new Patch(i, j, solar_luminosity));
+                currentRow.add(new Patch(solar_luminosity));
             }
         }
     }

@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 
 public class Patch{
-    private final  int xAxis;
-    private final int yAxis;
     private ArrayList<Patch> neighbours;
     Daisy daisy;
     private final double diffusionRate;
@@ -11,10 +9,8 @@ public class Patch{
     private double localTemp;
     private double solarLumin;
 
-    public Patch(int xAxis, int yAxis, ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
+    public Patch(ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
         super();
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
         this.neighbours = neighbours;
         this.surfaceAlbedo = surfaceAlbedo;
         this.diffusionRate = diffusionRate;
@@ -22,10 +18,8 @@ public class Patch{
         this.localTemp = 0;
     }
 
-    public Patch(int xAxis, int yAxis, double solarLumin) {
+    public Patch(double solarLumin) {
         super();
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
         this.solarLumin = solarLumin;
         this.neighbours = new ArrayList<>();
         this.surfaceAlbedo = 0.4;
@@ -33,14 +27,6 @@ public class Patch{
         this.localTemp = 0;
 
 
-    }
-
-    public int getXAxis() {
-        return this.xAxis;
-    }
-
-    public int getYAxis() {
-        return this.yAxis;
     }
 
     public void addNeighbour(Patch neighbor) {
