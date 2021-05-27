@@ -87,6 +87,7 @@ public class Ground extends DaisyWorldThread {
             }
         }
     }
+    
     //set all neighbors to every patch
     private void addNeighbors() {
         int left;
@@ -243,6 +244,7 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
+    //Seeding method in every tick
     private void seeding(){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -256,6 +258,7 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
+    //update the temprature of all Patches 
     private void updatePatchTemp(){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -264,6 +267,7 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
+    //diffusion effects on all patches
     private void diffusePatch(){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -272,6 +276,7 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
+    //solar luminosity changes in different scenario
     private void scenarioEffect(){
         if(scenario == "ramp"){
             if(current_year > 200 && current_year <= 400){
@@ -290,7 +295,7 @@ public class Ground extends DaisyWorldThread {
         else if(scenario == "high") solar_luminosity = 1.4;
     }
 
-    //writing the current status
+    //writing current status
     public void writeCSV() {
 		try {
 			csvWriter = new BufferedWriter(new FileWriter(csvfile, true));

@@ -4,7 +4,7 @@ public class Sim {
 	public static double albedo_of_blacks;
     public static void main(String[] args) {
 
-
+        //inputs
         double start_persent_whites = Double.parseDouble(args[0]);
         double start_persent_black = Double.parseDouble(args[1]);
         albedo_of_whites = Double.parseDouble(args[2]);
@@ -33,6 +33,7 @@ public class Sim {
         double albedo_of_surface = Double.parseDouble(args[6]);
         int end_year = Integer.parseInt(args[7]);
 
+        //input checker
         if(start_persent_black > 50 || start_persent_whites > 50 || albedo_of_whites >0.99 || albedo_of_blacks > 0.99 || solar_luminosity > 3 || albedo_of_surface > 1){
             System.out.println("invalid input detected.");
         }else{
