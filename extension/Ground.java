@@ -11,6 +11,7 @@ public class Ground extends DaisyWorldThread {
     private double globalTemp;
     private int num_of_white = 0;
     private int num_of_black = 0;
+    private int num_of_yellow = 0;
     private int current_year;
     private int end_year;
 
@@ -20,35 +21,44 @@ public class Ground extends DaisyWorldThread {
     private double solar_luminosity;
     private double start_persent_whites;
     private double start_persent_blacks;
+    private double start_persent_yellows;
     private double albedo_of_whites;
     private double albedo_of_blacks;
+    private double albedo_of_yellows;
     private String scenario; 
     private double albedo_of_surface;
 
     //calculate actual number of Dasiys in the initial state.
     private int start_whites;
     private int start_blacks;
+    private int start_yellow;
 
 
     //CSV file related parameter
     private File csvfile = new File("DaisyWorld.csv");
     private BufferedWriter csvWriter;
 
-    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, 
+    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, double start_persent_yellows,
     double albedo_of_blacks, double albedo_of_whites, String scenario, 
     double albedo_of_surface, int end_year) {
         this.size = size;
         this.solar_luminosity = solar_luminosity; 
+
         this.start_persent_whites = start_persent_whites;
         this.start_persent_blacks = start_persent_blacks;
-        this.albedo_of_blacks = start_blacks;
+        this.start_persent_yellows = start_persent_yellows;
+
         this.albedo_of_blacks = albedo_of_blacks;
         this.albedo_of_whites = albedo_of_whites;
+        this.albedo_of_yellows = (albedo_of_blacks + albedo_of_whites) / 2;
+
         this.scenario = scenario;
         this.albedo_of_surface = albedo_of_surface;
         this.end_year = end_year;
+
         this.start_whites = (int) Math.floor(size*size*start_persent_whites*0.01);
         this.start_blacks = (int) Math.floor(size*size*start_persent_blacks*0.01);
+        this.start_yellow = (int) Math.floor(size*size*start_persent_yellows*0.01);
         init();
         
     }
@@ -170,6 +180,19 @@ public class Ground extends DaisyWorldThread {
                 num_of_white++;
             }
         }
+
+        while(start_yellow > 0){
+            Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
+            if (patch.getAlbedo() == albedo_of_surface){
+                Daisy yellow = new Daisy();
+                yellow.initialiseAsWhite();
+                yellow.initialiseRandomAge();
+                patch.setDaisy(yellow);//set white
+                start_yellow--;
+                num_of_yellow++;
+
+            }
+        }
     }
 
 
@@ -180,14 +203,14 @@ public class Ground extends DaisyWorldThread {
             csvWriter.write("initial states");
 			
 			csvWriter.newLine();
-            csvWriter.write("start-%-whites" + "," + "start-%-blacks" +","
-                            + "albedo-of-whites" + "," + "albedo-of-blacks" + "," +
+            csvWriter.write("start-%-whites" + "," + "start-%-blacks" +"," + "start-%-yellows" + ","
+                            + "albedo-of-whites" + "," + "albedo-of-blacks" + "," + "albedo-of-yellows" + "," +
 					        "solar-luminosity" + "," + "albedo-of-surface" + "," +
 					        "scenario" + "," + "," + "end_year");
             
             csvWriter.newLine();
-            csvWriter.write(start_persent_whites + "," + start_persent_blacks + ","
-                            + albedo_of_whites + "," + albedo_of_blacks + "," +
+            csvWriter.write(start_persent_whites + "," + start_persent_blacks + "," + start_persent_yellows + ","
+                            + albedo_of_whites + "," + albedo_of_blacks + "," + albedo_of_yellows + "," +
                             solar_luminosity + "," + albedo_of_surface +","+
                             scenario + "," + "," + end_year);
             
@@ -195,11 +218,11 @@ public class Ground extends DaisyWorldThread {
 
             csvWriter.newLine();
             csvWriter.newLine();
-            csvWriter.write("Current year" + "," + "White Daisy numbers" + "," + "Black Daisy numbers" + ","
+            csvWriter.write("Current year" + "," + "White Daisy numbers" + "," + "Black Daisy numbers" + "," + "Yellow Daisy numbers" + ","
             				+ "Global Temprature" + "," + "Luminosity");
             
             csvWriter.newLine();
-            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + globalTemp + "," + solar_luminosity);	
+            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + num_of_yellow + "," + globalTemp + "," + solar_luminosity);	
             
             csvWriter.newLine();  
 
@@ -238,6 +261,8 @@ public class Ground extends DaisyWorldThread {
                     num_of_white += 1;
                 }else if(patch.getAlbedo() == albedo_of_blacks){
                     num_of_black += 1;
+                } else if(patch.getDaisy().isYellow()){
+                    num_of_yellow += 1;
                 }
             }
         }
