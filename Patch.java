@@ -9,7 +9,10 @@ public class Patch{
     private double localTemp;
     private double solarLumin;
 
-    public Patch(ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
+    public Patch(ArrayList<Patch> neighbours, 
+                 double surfaceAlbedo, 
+                 double diffusionRate, 
+                 double solarLumin) {
         super();
         this.neighbours = neighbours;
         this.surfaceAlbedo = surfaceAlbedo;
@@ -72,7 +75,8 @@ public class Patch{
      * @param solarLumin Solar luminosity
      */
     public void updateTemp() {
-        double localHeating = 72 * Math.log(getAbsorbedLumin(this.solarLumin)) + 80;
+        double localHeating = 
+            (72 * Math.log(getAbsorbedLumin(this.solarLumin)) + 80);
         this.localTemp = (this.localTemp + localHeating) / 2;
     }
 
@@ -100,7 +104,8 @@ public class Patch{
      */
     public void diffuse() {
 
-        double tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
+        double tempChange = 
+            (getLocalTemp() * this.diffusionRate / this.neighbours.size());
         
             
         for (Patch patch : this.neighbours) {
