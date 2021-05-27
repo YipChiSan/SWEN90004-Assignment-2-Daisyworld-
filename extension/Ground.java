@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/** Represent the ground where daisies grow, 
+ * which consists of 30 * 30 patches 
+ */
+
 public class Ground extends DaisyWorldThread {
+
     
     private ArrayList<ArrayList<Patch>> ground;
     private double globalTemp;
@@ -38,8 +43,8 @@ public class Ground extends DaisyWorldThread {
     private File csvfile = new File("DaisyWorld.csv");
     private BufferedWriter csvWriter;
 
-    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, double start_persent_yellows,
-    double albedo_of_blacks, double albedo_of_whites, String scenario, 
+    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, 
+    double start_persent_yellows, double albedo_of_blacks, double albedo_of_whites, String scenario, 
     double albedo_of_surface, int end_year) {
         this.size = size;
         this.solar_luminosity = solar_luminosity; 
@@ -65,10 +70,6 @@ public class Ground extends DaisyWorldThread {
 
     public double getGlobalTemp() {
         return this.globalTemp;
-    }
-
-    public Patch getPatch(int x, int y) {
-        return this.ground.get(x).get(y);
     }
 
 
@@ -269,12 +270,12 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
+    //update the status of all daisies 
     private void seeding(){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                Patch patch = ground.get(i).get(j);
-                
-                if(patch.isThereDaisy() == true){
+                Patch patch = ground.get(i).get(j);         
+                if(patch.isThereDaisy()){
                     patch.getDaisy().updateDaisy(patch.getNeighbour(), patch.getLocalTemp());
                 }
                 
@@ -282,6 +283,7 @@ public class Ground extends DaisyWorldThread {
         }
     }
 
+    //update temperature at each patch
     private void updatePatchTemp(){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
