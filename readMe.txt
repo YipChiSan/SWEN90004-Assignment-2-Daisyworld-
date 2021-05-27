@@ -1,4 +1,4 @@
-Step 1: Compile all java files, e.g. javac *.java
+Step 1: Compile this java file, e.g. javac Sim.java
 
 Version 1: Code without extension
 Step 2: run the Sim.java file with 8 arguments,
