@@ -104,19 +104,10 @@ public class Patch{
     public void diffuse() {
 
         double tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
-        
-            
+
         for (Patch patch : this.neighbours) {
-           
             patch.addTemp(tempChange);
             addTemp(-tempChange);
-                
-            
-        }
-            
-        
-           
-            
-        
+        }   
     }
 }
