@@ -1,5 +1,5 @@
 Step 1: Compile the original model/extension model, via javac Sim.java.
-	To complie the extension model change the directory to /extension then execute the above command
+	To complie the extension model change the directory to ./extension then execute the above command
 
 Version 1: To run simulation without extension
 Step 2: run the Sim.java file with 8 arguments,
