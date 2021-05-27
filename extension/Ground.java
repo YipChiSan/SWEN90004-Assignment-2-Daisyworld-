@@ -185,7 +185,7 @@ public class Ground extends DaisyWorldThread {
             Patch patch = ground.get(ram.nextInt(size)).get(ram.nextInt(size));
             if (patch.getAlbedo() == albedo_of_surface){
                 Daisy yellow = new Daisy();
-                yellow.initialiseAsWhite();
+                yellow.initialiseAsYellow();
                 yellow.initialiseRandomAge();
                 patch.setDaisy(yellow);//set white
                 start_yellow--;
@@ -253,6 +253,7 @@ public class Ground extends DaisyWorldThread {
     private void updateNumbers(){
         num_of_black = 0;
         num_of_white = 0;
+        num_of_yellow = 0;
         
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -261,7 +262,7 @@ public class Ground extends DaisyWorldThread {
                     num_of_white += 1;
                 }else if(patch.getAlbedo() == albedo_of_blacks){
                     num_of_black += 1;
-                } else if(patch.getDaisy().isYellow()){
+                } else if(patch.isThereDaisy() && patch.getDaisy().isYellow()){
                     num_of_yellow += 1;
                 }
             }
@@ -320,7 +321,7 @@ public class Ground extends DaisyWorldThread {
 		try {
 			csvWriter = new BufferedWriter(new FileWriter(csvfile, true));
 
-            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + globalTemp + "," + solar_luminosity);	
+            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + num_of_yellow + "," + globalTemp + "," + solar_luminosity);	
             
             csvWriter.newLine();     
             csvWriter.close();
@@ -352,7 +353,7 @@ public class Ground extends DaisyWorldThread {
                 
 
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();;
             }
         }
 
