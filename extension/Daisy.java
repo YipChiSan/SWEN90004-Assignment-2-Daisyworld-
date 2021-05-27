@@ -31,6 +31,7 @@ public class Daisy {
 	// set daisy as yellow
 	public void initialiseAsYellow () {
 		age = 0;
+		//Initial albedo of yellow daisy is simply the average of white and black daisy
 		albedo = (Sim.albedo_of_blacks + Sim.albedo_of_whites) / 2;
 		isYellow = true;
 		alive = true;
