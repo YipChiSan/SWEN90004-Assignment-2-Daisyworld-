@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 
 public class Patch{
-    private final  int xAxis;
-    private final int yAxis;
     private ArrayList<Patch> neighbours;
     Daisy daisy;
     private final double diffusionRate;
@@ -11,10 +9,8 @@ public class Patch{
     private double localTemp;
     private double solarLumin;
 
-    public Patch(int xAxis, int yAxis, ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
+    public Patch(ArrayList<Patch> neighbours, double surfaceAlbedo, double diffusionRate, double solarLumin) {
         super();
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
         this.neighbours = neighbours;
         this.surfaceAlbedo = surfaceAlbedo;
         this.diffusionRate = diffusionRate;
@@ -22,10 +18,8 @@ public class Patch{
         this.localTemp = 0;
     }
 
-    public Patch(int xAxis, int yAxis, double solarLumin) {
+    public Patch(double solarLumin) {
         super();
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
         this.solarLumin = solarLumin;
         this.neighbours = new ArrayList<>();
         this.surfaceAlbedo = 0.4;
@@ -35,22 +29,18 @@ public class Patch{
 
     }
 
-    public int getXAxis() {
-        return this.xAxis;
-    }
-
-    public int getYAxis() {
-        return this.yAxis;
-    }
-
+    //Add a neighbour to the neighbour list
     public void addNeighbour(Patch neighbor) {
         this.neighbours.add(neighbor);
     }
 
+
+    //Return the neighbor list
     public ArrayList<Patch> getNeighbour() {
         return this.neighbours;
     }
 
+    //Set a Daisy to this Patch
     public void setDaisy(Daisy daisy) {
         this.daisy = daisy;
     }
@@ -59,10 +49,12 @@ public class Patch{
         return daisy;
     }
 
+    //Change the solar luminosity if necessary 
     public void setSolarLumin(double solarLumin) {
         this.solarLumin = solarLumin;
     }
 
+    //Check if there is a daisy
     public Boolean isThereDaisy() {
         if (this.daisy != null) {
             return this.daisy.isAlive(); //Assume there is a function to check the survivability of the daisy
@@ -90,10 +82,13 @@ public class Patch{
         return this.localTemp;
     }
 
+    //Use when neighbours want to diffuse some heat
     public void addTemp(double addedTemp){
         this.localTemp += addedTemp;
     }
 
+
+    //Get the albedo of this patch
     public double getAlbedo(){
         if (isThereDaisy()) {
             return daisy.getAlbedo();
@@ -109,19 +104,10 @@ public class Patch{
     public void diffuse() {
 
         double tempChange = getLocalTemp() * this.diffusionRate / this.neighbours.size();
-        
-            
+
         for (Patch patch : this.neighbours) {
-           
             patch.addTemp(tempChange);
             addTemp(-tempChange);
-                
-            
-        }
-            
-        
-           
-            
-        
+        }   
     }
 }

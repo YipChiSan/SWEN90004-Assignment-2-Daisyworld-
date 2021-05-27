@@ -36,6 +36,7 @@ public class Daisy {
 		alive = true;
 	}
 
+	//Check whether is a yellow daisy or not
 	public boolean isYellow() {
 		return this.isYellow;
 	}
@@ -50,13 +51,16 @@ public class Daisy {
 			
 			// Yello daisy can change its color when the localTemp is too hot or too cold
 			if (isYellow()) {
-				if (localTemp > 30 && this.albedo < Sim.albedo_of_whites) {
-					this.albedo += 0.025;
+				// Yellow daisy's albedo cannot be higher than white daisy
+				if (localTemp > 30 && this.albedo < Sim.albedo_of_whites) { 
+					this.albedo += 0.025; //Increase albedo if local temp is too high
+				// Yellow daisy's albedo cannot be lower than black daisy
 				} else if (localTemp < 10 && this.albedo > Sim.albedo_of_blacks) {
-					this.albedo -= 0.025;
+					this.albedo -= 0.025; //Decrease albedo if local temp is too low
 				}
 			}
-			//
+			// End Yellow daisy specific routine
+
 			Random r = new Random();
 			double seedThreshold = 
             (0.1457 * localTemp) - (0.0032 * (localTemp*localTemp)) - 0.6443;
