@@ -34,9 +34,14 @@ public class Ground extends DaisyWorldThread {
     private File csvfile = new File("DaisyWorld.csv");
     private BufferedWriter csvWriter;
 
-    public Ground(int size, double solar_luminosity, double start_persent_whites, double start_persent_blacks, 
-    double albedo_of_blacks, double albedo_of_whites, String scenario, 
-    double albedo_of_surface, int end_year) {
+    public Ground(int size, double solar_luminosity,
+		  double start_persent_whites,
+		  double start_persent_blacks,
+		  double albedo_of_blacks,
+		  double albedo_of_whites,
+		  String scenario, 
+		  double albedo_of_surface, 
+		  int end_year) {
         this.size = size;
         this.solar_luminosity = solar_luminosity; 
         this.start_persent_whites = start_persent_whites;
@@ -200,7 +205,8 @@ public class Ground extends DaisyWorldThread {
             				+ "Global Temprature" + "," + "Luminosity");
             
             csvWriter.newLine();
-            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + globalTemp + "," + solar_luminosity);	
+            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black +
+			    "," + globalTemp + "," + solar_luminosity);	
             
             csvWriter.newLine();  
 
@@ -300,7 +306,8 @@ public class Ground extends DaisyWorldThread {
 		try {
 			csvWriter = new BufferedWriter(new FileWriter(csvfile, true));
 
-            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," + globalTemp + "," + solar_luminosity);	
+            csvWriter.write(current_year + "," + num_of_white + "," + num_of_black + "," 
+			    + globalTemp + "," + solar_luminosity);	
             
             csvWriter.newLine();     
             csvWriter.close();
